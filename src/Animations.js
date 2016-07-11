@@ -313,5 +313,5 @@ Animations.prototype.addAnimationToID = function (id, option) {
 
 };
 
-export default Animations;
+export default new Animations;
 
