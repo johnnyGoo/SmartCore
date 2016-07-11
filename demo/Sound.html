@@ -7,65 +7,63 @@
 </head>
 <body>
 <script>
+    console.log(Smart);
 
-    Smart=Smart.default
-        if (Smart.Device.weixin) {
-            //微信内
+    if (Smart.Device.weixin) {
+        //微信内
 
-        } else {
-            //微信外
-        }
-
-
-        if (Smart.Device.android) {
-            //android
-
-        } else if (Smart.Device.iphone) {
-            //iphone
-
-        } else if (Smart.Device.pc()) {
-
-            //PC
-        }
+    } else {
+        //微信外
+    }
 
 
-        var music = new Smart.Sound({path: 'sound/bg.mp3',loop:false});
-        music.seek(20);
-        music.play();
+    if (Smart.Device.android) {
+        //android
+
+    } else if (Smart.Device.iphone) {
+        //iphone
+
+    } else if (Smart.Device.pc()) {
+
+        //PC
+    }
 
 
-        music.addEventListener('stop', function (e) {
-            Smart._.delay(function(){
-                music.destory()
-            },1000)
-            console.log('ended');
-        })
-        music.addEventListener('oncanplay', function (e) {
-
-            console.log('oncanplay');
-        })
+    var music = new Smart.Sound({path: 'sound/bg.mp3', loop: false});
+    music.seek(20);
+    music.play();
 
 
+    music.addEventListener('stop', function (e) {
+        Smart._.delay(function () {
+            music.destory()
+        }, 1000)
+        console.log('ended');
+    })
+    music.addEventListener('oncanplay', function (e) {
 
-        music.seek(75);
+        console.log('oncanplay');
+    })
 
 
-        music.play();
-        //video.pause();
+    music.seek(75);
+
+
+    music.play();
+    //video.pause();
+    // video.stop();
+
+    // video.destory();
+    // video.toggle();
+
+    music.percent();
+
+    setTimeout(function () {
+        console.log(music.audio.duration);
         // video.stop();
 
-        // video.destory();
-        // video.toggle();
 
-        music.percent();
-
-        setTimeout(function () {
-            console.log(music.audio.duration);
-            // video.stop();
-
-
-        }, 1000);
-
+    }, 1000);
 
 
 </script>
