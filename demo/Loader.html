@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>腾讯视频</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <script src="../dist/smart.min.js"></script>
+    <style>
+        body, html {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="example" class="black" style="color:#ff0000;background: #0086b3;padding: 0px;color: #fff;text-align: center">
+    <img link="http://img1.imgtn.bdimg.com/it/u=1052126808,1038636235&fm=206&gp=0.jpg"/>
+    <IMG src="http://p7.qhimg.com/t0165c9bac243ba89db.jpg"/>
+    <img src="http://www.bz55.com/uploads/allimg/130308/1-13030P92K6.jpg"/>
+</div>
+
+
+<script>
+    var Event = Smart.Event;
+    var Loader = Smart.Loader;
+    var loader = new Loader();
+    loader.addImages(document.querySelector('body'));
+    //监听资源加载进度事件
+    loader.addProgressListener(function (p) {
+        console.log(p.completedCount+'/'+ p.totalCount);
+    });
+    //监听资源加载完成事件
+    loader.addCompletionListener(function () {
+        console.log('加载完成');
+        //显示图片
+        loader.displayImages('body')
+    });
+    //启动资源加载管理器
+    loader.start();
+
+</script>
+</body>
+</html>

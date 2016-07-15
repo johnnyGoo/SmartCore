@@ -1,5 +1,5 @@
 import PxLoaderImage from './PxLoaderImage';
-
+import Utils from './Utils'
 
 import _ from 'underscore'
 
@@ -411,12 +411,6 @@ PxLoaderTags.prototype.intersects = function (other) {
     return false;
 };
 
-// AMD module support
-if (typeof define === 'function' && define.amd) {
-    define('PxLoader', [], function () {
-        return PxLoader;
-    });
-}
 
 // add a convenience method to PxLoader for adding an image
 PxLoader.prototype.addImage = function (url, tags, priority, origin) {
@@ -425,33 +419,94 @@ PxLoader.prototype.addImage = function (url, tags, priority, origin) {
 
     return imageLoader.img;
 };
-PxLoader.prototype.checkAllImages=function(dom){
-    var images=[];
-    $(dom).each(function () {
-        if ($(this).prop("nodeName") == 'IMG') {
-            images.push($(this).attr('img')||$(this).attr('src'));
-        } else {
-            $(this).find('img').each(
-                function () {
-                    images.push($(this).attr('img')||$(this).attr('src'));
+function getImageUrl(node) {
+    if (node.nodeName == 'IMG') {
+        return (node.getAttribute('link') || node.getAttribute('src'));
+    } else {
+        return null;
+    }
+}
+function displayImage(node) {
+    if (node.nodeName == 'IMG') {
+        if (node.getAttribute('link')) {
+            node.setAttribute('src', node.getAttribute('link'));
+        }
 
-                }
+    } else {
+        return null;
+    }
+}
+PxLoader.prototype.displayImages = function (dom) {
 
-            )
+    if (!dom) {
+        dom = document.body;
+    } else if (Utils.isString(dom)) {
+        dom = document.querySelectorAll(dom);
+    }
+    var imgs = [];
+    imgs.push(dom);
+    var list;
 
+    if (dom.querySelectorAll) {
+        list = dom.querySelectorAll('img');
+        _.each(list, function (img) {
+            imgs.push(img);
+        })
+    } else {
+        _.each(dom, function (node) {
+            imgs.push(node);
+            list = node.querySelectorAll('img');
+            _.each(list, function (img) {
+                imgs.push(img);
+            })
+        });
+    }
+    _.each(imgs, function (node) {
+        displayImage(node);
+    });
+}
+PxLoader.prototype.checkAllImages = function (dom) {
+    var images = [];
+
+
+    if (!dom) {
+        dom = document.body;
+    } else if (Utils.isString(dom)) {
+        dom = document.querySelectorAll(dom);
+    }
+    var imgs = [];
+    imgs.push(dom);
+    var list;
+
+    if (dom.querySelectorAll) {
+        list = dom.querySelectorAll('img');
+        _.each(list, function (img) {
+            imgs.push(img);
+        })
+    } else {
+        _.each(dom, function (node) {
+            imgs.push(node);
+            list = node.querySelectorAll('img');
+            _.each(list, function (img) {
+                imgs.push(img);
+            })
+        });
+    }
+    _.each(imgs, function (node) {
+        var url = getImageUrl(node);
+        if (url) {
+            images.push(url);
         }
     });
+    images = _.uniq(images);
     return images;
-}
+};
 PxLoader.prototype.addImages = function (urls, tags, priority, origin) {
-    urls= _.isArray(urls)?urls:this.checkAllImages($(urls));
-    urls=_.uniq(urls);
-    urls= _.without(urls,null);
-
-
-    var imgs=[];
-
-    for(var i=0;i<urls.length;i++){
+    urls = _.isArray(urls) ? urls : this.checkAllImages(urls);
+    urls = _.uniq(urls);
+    urls = _.without(urls, null);
+    var imgs = [];
+    for (var i = 0; i < urls.length; i++) {
         imgs.push(this.addImage(urls[i], tags, priority, origin))
     }
     return imgs;

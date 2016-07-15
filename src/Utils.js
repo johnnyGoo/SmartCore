@@ -1,9 +1,51 @@
 import _ from 'underscore'
 var Utils = {};
+Utils.windowSize = function () {
+    var dom = window;
+    return {
+        width: dom.innerWidth,
+        height: dom.innerHeight
+    }
+}
+Utils.domInfo = function (dom) {
+    if (dom == window || dom == document) {
+        dom = document.body
+    }
+    return {
+        left: dom.offsetLeft,
+        top: dom.offsetTop,
+        width: dom.offsetWidth,
+        height: dom.offsetHeight,
+        scrollHeight: dom.scrollHeight,
+        scrollWidth: dom.scrollWidth,
+        scrollLeft: dom.scrollLeft,
+        scrollTop: dom.scrollTop,
+        clientHeight: dom.clientHeight,
+        clientWidth: dom.clientWidth,
+        innerWidth: dom.innerWidth,
+        innerHeight: dom.innerHeight
+    }
+}
+
+Utils.deepClone = function (obj) {
+    var str, newobj = obj.constructor === Array ? [] : {};
+    if (typeof obj !== 'object') {
+        return;
+    } else if (window.JSON) {
+        str = JSON.stringify(obj), //系列化对象
+            newobj = JSON.parse(str); //还原
+    } else {
+        for (var i in obj) {
+            newobj[i] = typeof obj[i] === 'object' ?
+                clone(obj[i]) : obj[i];
+        }
+    }
+    return newobj;
+}
 /*
  * 删除对象属性
  * */
-Utils.clearKey=function clearKey(obj, key) {
+Utils.clearKey = function clearKey(obj, key) {
     if (_.has(obj, key)) {
         delete obj[key];
     }
@@ -12,8 +54,8 @@ Utils.clearKey=function clearKey(obj, key) {
 /*
  * 删除多个对象属性
  * */
-Utils.clearKeys=function (obj, key) {
-    var me=this;
+Utils.clearKeys = function (obj, key) {
+    var me = this;
 
     if (me.isString(key)) {
         me.clearKey(obj, key);
@@ -28,26 +70,26 @@ Utils.clearKeys=function (obj, key) {
     }
 };
 //是否数组
-Utils.isObject=function (arg) {
+Utils.isObject = function (arg) {
     return Object.prototype.toString.call(arg) === '[object Object]';
 };
 
 //是否数组
-Utils.isNumber=  function (arg) {
-       return Object.prototype.toString.call(arg) === '[object Number]';
-   };
+Utils.isNumber = function (arg) {
+    return Object.prototype.toString.call(arg) === '[object Number]';
+};
 
 //是否数组
-Utils.isArray=function (arg) {
+Utils.isArray = function (arg) {
     return Object.prototype.toString.call(arg) === '[object Array]';
 };
 
-Utils.isString=function (arg) {
+Utils.isString = function (arg) {
     return Object.prototype.toString.call(arg) === '[object String]';
 };
 
-Utils.match=function (str, matchs) {
-    var me=this;
+Utils.match = function (str, matchs) {
+    var me = this;
     var regStr = '';
     if (me.isArray(matchs)) {
         _.each(matchs, function (v) {

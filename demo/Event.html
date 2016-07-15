@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>腾讯视频</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <script src="../dist/smart.min.js"></script>
+<style>
+    body{
+        margin: 0px;
+    }
+</style>
+</head>
+<body>
+<div id="example" class="black" style="color:#ff0000;width:100%;height: 1500px;background: #0086b3;padding: 10px;color: #fff;text-align: center">
+    abc
+</div>
+
+
+
+<script>
+
+    var Event = Smart.Event;
+    var Utils=Smart.Utils;
+
+    Event.documentEvent('click', function () {
+        console.log('once clicked');
+        return true;
+    });
+
+
+    var rm_widow=Event.windowEvent('resize', function () {
+        console.log('window resize');
+        console.log(Utils.windowSize());
+       // rm_widow();
+    })
+    var rm_scoll=Event.bindEvent(window,'scroll', function () {
+        console.log('scoll');  console.log(Utils.windowSize());
+       // rm_scoll();
+    })
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -3,8 +3,7 @@
  */
 import Utils from './Utils'
 import _ from 'underscore'
-var Css = {
-};
+var Css = {};
 
 Css.style = function () {
     if (!Css.styleDom) {
@@ -72,10 +71,11 @@ function formatScaleInObject(obj) {
         scale.scaleY = obj.scaleY;
         delete obj.scaleY;
     }
+    if (scale.scaleX != 1 || scale.scaleY != 1) {
 
-    if (scale.scaleX != 1 && scale.scaleY != 1) {
         obj.scaleString = 'scale(' + scale.scaleX + ',' + scale.scaleY + ') ';
     }
+
 }
 
 function transformString(obj, ext) {
@@ -87,6 +87,14 @@ function transformString(obj, ext) {
     var string = '';
     obj = _.clone(obj);
     formatScaleInObject(obj);
+
+    // if(!_.has(obj,'x')){
+    //     obj.x=0;
+    // }
+    // if(!_.has(obj,'y')){
+    //     obj.y=0;
+    // }
+
     _.each(obj, function (value, key) {
         switch (key) {
             case 'x':
@@ -120,7 +128,6 @@ function transformObject(obj, ext) {
 }
 
 
-
 /**
  * 添加css样式到文档
  */
@@ -144,7 +151,7 @@ Css.smartObject = function (obj, ext) {
     var cssObj = {};
     _.each(obj, function (value, key) {
         // cssObj[key] = withExt(key, value, ext);
-        if (Utils.match(key, '^animation|^transform-|^perspective|^backface-visibility')) {
+        if (Utils.match(key, '^transition|^animation|^transform-|^perspective|^backface-visibility|^filter')) {
             _.extend(cssObj, fixCss(key, withExt(key, value, ext)))
         } else {
             cssObj[key] = withExt(key, value, ext);
@@ -166,7 +173,7 @@ Css.createCssStyle = function (mark, obj) {
 };
 Css.createSmartCssStyle = function (mark, smartObj, ext) {
     var cssObj = this.smartObject(smartObj, ext);
-    this.createCssStyle(mark,cssObj);
+    this.createCssStyle(mark, cssObj);
 };
 /**
  * 添加css样式到dom

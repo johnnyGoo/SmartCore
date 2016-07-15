@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/Smart.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    // publicPath: '/dist/',
+     publicPath: '/dist/',
     library: 'Smart',
     libraryTarget: 'umd',
     filename: 'smart.min.js'

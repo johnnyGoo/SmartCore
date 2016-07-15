@@ -3,8 +3,8 @@
  * https://github.com/alexgibson/shake.js
  * License: MIT license
  */
-
-
+import Css from './Css'
+import _ from 'underscore'
 
 // Utility
 
@@ -186,6 +186,13 @@ Animations.prototype.getDynamicSheet = function () {
 };
 
 Animations.prototype.create = function (name, frames) {
+
+
+    
+
+    
+
+
     var styles = this.getDynamicSheet();
 
     // frames can also be passed as the first parameter
@@ -193,6 +200,9 @@ Animations.prototype.create = function (name, frames) {
         frames = name;
         name = null;
     }
+    _.each(frames,function (obj,index) {
+        frames[index]=Css.smartObject(obj);
+    })
 
     if (!name) {
         this.id++;
