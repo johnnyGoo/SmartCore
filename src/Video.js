@@ -18,44 +18,38 @@ Video.prototype = {
         this.config = _.extend({
             autoplay: true,
             autoload: false
-
-
         }, config);
 
-        if (!this.config.src) {
-            console.log('path is need');
-        } else {
 
-            var videoObj = document.createElement('video');
+        var videoObj = config.video||document.createElement('video');
+        delete config.video;
 
-            if (this.config.inline != false) {
-                videoObj.setAttribute('webkit-playsinline', true);
-            }
-
-            this.video = videoObj;
-            for (var key in this.config) {
-                if (this.config.hasOwnProperty(key) && (key in this.video)) {
-                    this.video[key] = this.config[key];
-                }
-            }
-            this.video.oncanplay = function () {
-                me.dispatchEvent({type: "canplay"});
-            }
-            this.video.onended = function () {
-                //me.stop();
-                me.dispatchEvent({type: "ended"});
-            };
-            this.video.onloadeddata = function () {
-                //me.stop();
-                me.dispatchEvent({type: "onloadeddata"});
-            };
-
-
-
-            this.endedCheck();
-            this.video.load();
-
+        if (this.config.inline != false) {
+            videoObj.setAttribute('webkit-playsinline', true);
         }
+
+        this.video = videoObj;
+        for (var key in this.config) {
+            if (this.config.hasOwnProperty(key) && (key in this.video)) {
+                this.video[key] = this.config[key];
+            }
+        }
+        this.video.oncanplay = function () {
+            me.dispatchEvent({type: "canplay"});
+        }
+        this.video.onended = function () {
+            //me.stop();
+            me.dispatchEvent({type: "ended"});
+        };
+        this.video.onloadeddata = function () {
+            //me.stop();
+            me.dispatchEvent({type: "onloadeddata"});
+        };
+
+
+        this.endedCheck();
+        this.video.load();
+
 
         //   console.log(this)
 
@@ -68,17 +62,23 @@ Video.prototype = {
         me.removeEndedCheck();
         this.iv = setInterval(function () {
             //me.stop();
+            if (me.ended == true) {
+                me.removeEndedCheck();
+                return;
+            }
+            me.ended = true;
             if (me.currentTime() < 1) {
                 return;
             }
-            if (me.currentTime() >= me.duration()) {
+            if (me.currentTime()>= me.duration()) {
                 me.dispatchEvent({type: "ended"});
                 me.removeEndedCheck();
             }
-        }, 100);
+        }, 5);
     },
 
     play: function () {
+        this.ended = false;
         this.endedCheck();
         this.video.play();
         this.dispatchEvent({type: "play"});

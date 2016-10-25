@@ -10,4 +10,7 @@ import Sound from './Sound'
 import Tween from './Tween'
 import Url from './Url'
 import Video from './Video'
-export {_,Animations,Css,Event,Utils,EventDispatcher,Loader,Device,Sound,Tween,Url,Video}
+import ready from './Ready'
+import Cookie from './Cookie'
+import Size from './Size'
+export {_,Animations,Css,Event,Utils,EventDispatcher,Loader,Device,Sound,Tween,Url,Video,ready,Cookie,Size}

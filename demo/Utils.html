@@ -10,32 +10,24 @@
 
 </head>
 <body>
-<div id="log"></div>
-
+<div id="example">
+    abc<br/>
+</div>
+<div class="test vue-popup-shake-animation">blue</div>
 
 <script>
 
+    var Utils = Smart.Utils;
 
-    function log(msg){
-        console.log(msg)
-    }
-
-    log(Smart);
-    log(Smart.Url.getPath('http://ndgeclipse.mycreate.net/default.aspx?ZAID=10'));
-
+    Utils.getScript('load.js', function () {
+        console.log('load loaded')
+    })
+    var dom=document.querySelector('.test')
 
 
-   log(navigator.userAgent);
-
-
-
-
-
-
-
-
-
-
+    Utils.removeDom(dom)
+    Utils.removeDom(dom)
+    Utils.removeDom(dom)
 
 
 </script>

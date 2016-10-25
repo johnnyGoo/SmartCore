@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>腾讯视频</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <script src="../dist/smart.min.js"></script>
+<style>
+    html,body{
+        padding: 0px;margin: 0px;
+    }
+</style>
+</head>
+
+<body>
+<div style="position: absolute;width: 100%;height: 100%;background: #ff0000">
+    <div class="mmm" id="movv" style="position: absolute;width: 50%;height: 100%;background: #006600">
+
+    </div>
+    <div class="mmm" style="position: absolute;left:50%;width: 50%;height: 100%;background:#40a070 ">
+
+    </div>
+</div>
+
+
+
+<script>
+
+   var Device=Smart.Device;
+   Device.removeSafariDefaultMove('#movv');
+//   Device.removeSafariDefaultMove('.mmm');
+   console.log(navigator);
+   console.log(Device);
+
+
+
+</script>
+</body>
+</html>

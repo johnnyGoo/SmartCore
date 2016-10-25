@@ -10,31 +10,12 @@
 
 </head>
 <body>
-<div id="log"></div>
-
 
 <script>
 
-
-    function log(msg){
-        console.log(msg)
-    }
-
-    log(Smart);
-    log(Smart.Url.getPath('http://ndgeclipse.mycreate.net/default.aspx?ZAID=10'));
-
-
-
-   log(navigator.userAgent);
-
-
-
-
-
-
-
-
-
+    Smart.ready(function () {
+        alert('ready')
+    })
 
 
 

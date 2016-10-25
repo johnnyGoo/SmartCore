@@ -1,17 +1,18 @@
 /**
  * 设备信息
  */
+import _ from 'underscore'
+var userAgent = navigator.userAgent.toLowerCase();
 var Device = {
-    uc: RegExp("Android").test(navigator.userAgent) && RegExp("UC").test(navigator.userAgent) ? true : false,
-    wechat: RegExp("MicroMessenger").test(navigator.userAgent) ? true : false,
-    iphone: RegExp("iPhone").test(navigator.userAgent) || RegExp("iPod").test(navigator.userAgent) || RegExp("iPad").test(navigator.userAgent) ? true : false,
-    android: RegExp("Android").test(navigator.userAgent) ? true : false,
+    uc: RegExp("android").test(userAgent) && RegExp("UC").test(userAgent) ? true : false,
+    wechat: RegExp("micromessenger").test(userAgent) ? true : false,
+    iphone: RegExp("iphone").test(userAgent) || RegExp("ipod").test(userAgent) || RegExp("ipad").test(userAgent) ? true : false,
+    android: RegExp("android").test(userAgent) ? true : false,
     pc: function () {
-        var userAgentInfo = navigator.userAgent;
-        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+        var Agents = new Array("android", "iphone", "symbianos", "windows phone", "ipad", "ipod");
         var flag = true;
         for (var v = 0; v < Agents.length; v++) {
-            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            if (userAgent.indexOf(Agents[v]) > 0) {
                 flag = false;
                 break;
             }
@@ -22,8 +23,17 @@ var Device = {
         if (!dom) {
             dom = 'body';
         }
-        $(dom).attr('ontouchmove', 'event.preventDefault();');
-    }
+        dom = document.querySelectorAll(dom);
+        if (dom.length) {
+            _.each(dom, function (v) {
+                v.setAttribute('ontouchmove', 'event.preventDefault();');
+            })
+        }
+
+
+    },
+    ie: (/msie/.test(userAgent)) && (!/opera/.test(userAgent))
+
 };
 
 

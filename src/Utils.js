@@ -7,6 +7,65 @@ Utils.windowSize = function () {
         height: dom.innerHeight
     }
 }
+
+Utils.removeDom=function (dom) {
+    if(dom.parentNode){
+        dom.parentNode.removeChild(dom)
+    }
+};
+
+/*
+ * 获取js
+ * */
+Utils.getScript = function (src, callback) {
+    var head = document.getElementsByTagName("head")[0] || document.documentElement;
+    var script = document.createElement("script");
+    script.async = "true";
+    script.src = src;
+    var done = false;
+    // 加载完毕后执行
+    script.onload = script.onreadystatechange = function () {
+        if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+            done = true;
+            try {
+                callback(script);
+            } catch (err) {
+                throw (new Error('Script load Error:'+src))
+            }
+            script.onload = script.onreadystatechange = null;
+        }
+    };
+
+    head.insertBefore(script, head.firstChild);
+};
+/*
+ * 获取css
+ * */
+Utils.getCss = function (src, callback) {
+    var head = document.getElementsByTagName("head")[0] || document.documentElement;
+    var script = document.createElement("link");
+    script.async = "true";
+    script.href = src;
+    script.rel = 'stylesheet';
+    script.type = 'text/css';
+
+    var done = false;
+
+    // 加载完毕后执行
+    script.onload = script.onreadystatechange = function () {
+        if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+            done = true;
+            try {
+                callback(script);
+            } catch (err) {
+                throw (new Error('Css load Error:'+src))
+            }
+            script.onload = script.onreadystatechange = null;
+        }
+    };
+
+    head.insertBefore(script, head.firstChild);
+};
 Utils.domInfo = function (dom) {
     if (dom == window || dom == document) {
         dom = document.body

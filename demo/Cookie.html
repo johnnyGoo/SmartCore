@@ -7,35 +7,25 @@
     <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
     <script src="../dist/smart.min.js"></script>
-
+<style>
+    body{
+        margin: 0px;
+    }
+</style>
 </head>
 <body>
-<div id="log"></div>
+<div id="example" class="black" style="color:#ff0000;width:100%;height: 1500px;background: #0086b3;padding: 10px;color: #fff;text-align: center">
+    abc
+</div>
+
 
 
 <script>
 
-
-    function log(msg){
-        console.log(msg)
-    }
-
-    log(Smart);
-    log(Smart.Url.getPath('http://ndgeclipse.mycreate.net/default.aspx?ZAID=10'));
-
-
-
-   log(navigator.userAgent);
-
-
-
-
-
-
-
-
-
-
+    var Cookie = Smart.Cookie;
+    Cookie.setCookie('name','哈啦啦','10s');
+    alert(Cookie.getCookie('name'));
+  //  Cookie.delCookie('name');
 
 
 </script>
