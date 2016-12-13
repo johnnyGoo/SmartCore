@@ -8,11 +8,12 @@ Utils.windowSize = function () {
     }
 }
 
-Utils.removeDom=function (dom) {
-    if(dom.parentNode){
+Utils.removeDom = function (dom) {
+    if (dom && dom.parentNode) {
         dom.parentNode.removeChild(dom)
     }
 };
+
 
 /*
  * 获取js
@@ -30,7 +31,7 @@ Utils.getScript = function (src, callback) {
             try {
                 callback(script);
             } catch (err) {
-                throw (new Error('Script load Error:'+src))
+                throw (new Error('Script load Error:' + src))
             }
             script.onload = script.onreadystatechange = null;
         }
@@ -58,7 +59,7 @@ Utils.getCss = function (src, callback) {
             try {
                 callback(script);
             } catch (err) {
-                throw (new Error('Css load Error:'+src))
+                throw (new Error('Css load Error:' + src))
             }
             script.onload = script.onreadystatechange = null;
         }
@@ -246,6 +247,36 @@ Utils.formatDate = function (date, fmt) { //author: meizz
         if (new RegExp("(" + k + ")").test(fmt))
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
+};
+
+Utils.time = function () {
+    return Math.round(new Date().getTime() / 1000)
+};
+
+Utils.date = function (time, format, zero) {
+    var date = new Date(time * 1000);
+
+    function fixValue(v, length) {
+        if (zero) {
+            return Utils.intToString(v, length)
+        } else {
+            return v;
+        }
+    }
+
+    var data = {
+        Y: date.getFullYear(),
+        m: fixValue(date.getMonth() + 1, 2),
+        d: fixValue(date.getDate(), 2),
+        H: fixValue(date.getHours(), 2),
+        i: fixValue(date.getMinutes(), 2),
+        s: fixValue(date.getSeconds(), 2)
+    };
+    _.each(data, function (obj, id) {
+        format = Utils.replace(format, id, obj);
+    })
+
+    return format
 };
 
 

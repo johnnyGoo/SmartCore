@@ -26,6 +26,7 @@ Video.prototype = {
 
         if (this.config.inline != false) {
             videoObj.setAttribute('webkit-playsinline', true);
+            videoObj.setAttribute('playsinline', true);
         }
 
         this.video = videoObj;
