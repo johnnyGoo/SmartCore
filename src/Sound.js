@@ -1,4 +1,3 @@
-
 import _ from 'underscore'
 
 import EventDispatcher from './EventDispatcher'
@@ -6,12 +5,12 @@ import EventDispatcher from './EventDispatcher'
  * 声音播放
  */
 
-function Sound(config) {
-    this.init(config);
+function Sound(config, audio) {
+    this.init(config, audio);
 }
 
 Sound.prototype = {
-    init: function (config) {
+    init: function (config, audio) {
         var me = this;
         EventDispatcher.prototype.apply(Sound.prototype);
         this.config = _.extend({
@@ -21,28 +20,43 @@ Sound.prototype = {
 
         }, config);
 
-        if (!this.config.path) {
-            console.log('path is need');
-        } else {
-
-            this.audio = new Audio(this.config.path);
-            for (var key in this.config) {
-                if (this.config.hasOwnProperty(key) && (key in this.audio)) {
-                    this.audio[key] = this.config[key];
-                }
-            }
+        if (audio) {
+            this.audio = audio;
             this.audio.onended = function () {
                 me.dispatchEvent({type: "onended"});
             }
-            this.audio.oncanplay=function(){
+            this.audio.oncanplay = function () {
                 me.dispatchEvent({type: "oncanplay"});
             }
             this.audio.onloadeddata = function () {
                 //me.stop();
                 me.dispatchEvent({type: "onloadeddata"});
             };
-            this.audio.load();
 
+        } else {
+            if (!this.config.path) {
+                console.log('path is need');
+            } else {
+
+                this.audio = new Audio(this.config.path);
+                for (var key in this.config) {
+                    if (this.config.hasOwnProperty(key) && (key in this.audio)) {
+                        this.audio[key] = this.config[key];
+                    }
+                }
+                this.audio.onended = function () {
+                    me.dispatchEvent({type: "onended"});
+                }
+                this.audio.oncanplay = function () {
+                    me.dispatchEvent({type: "oncanplay"});
+                }
+                this.audio.onloadeddata = function () {
+                    //me.stop();
+                    me.dispatchEvent({type: "onloadeddata"});
+                };
+                this.audio.load();
+
+            }
         }
 
     },
@@ -60,23 +74,23 @@ Sound.prototype = {
         this.audio.pause();
         this.dispatchEvent({type: "pause"});
     },
-    playing:function(){
+    playing: function () {
         return !this.audio.paused;
     },
-    currentTime:function(){
+    currentTime: function () {
         return this.audio.currentTime;
     },
-    duration:function(){
+    duration: function () {
         return this.audio.duration;
     },
 
-    onended:function(){
+    onended: function () {
         this.dispatchEvent({type: "stop"});
     },
 
     stop: function () {
         this.audio.pause();
-       // this.audio.currentTime = 0;
+        // this.audio.currentTime = 0;
         this.dispatchEvent({type: "stop"});
     },
 

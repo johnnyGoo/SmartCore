@@ -182,12 +182,11 @@ Utils.stringToObject = function (str) {
     var obj = {};
     var node;
     var arrSource = decodeURI(str).split("&");
-    i = 0;
+    var i = 0;
     while (i < arrSource.length) {
         if (arrSource[i].indexOf("=") > 0) {
             node = arrSource[i].split("=");
             obj[node[0]] = node[1];
-
         }
         i++;
     }
