@@ -178,7 +178,8 @@ Css.createSmartCssStyle = function (mark, smartObj, ext) {
 /**
  * 添加css样式到dom
  */
-Css.css = function (el, obj) {
+
+Css._cssToDom = function (el, obj) {
     _.each(obj, function (v, k) {
         if (v) {
             el.style[k] = v;
@@ -188,10 +189,27 @@ Css.css = function (el, obj) {
 
     });
 };
+Css.css = function (els, obj) {
+    var me = this;
+    if (els.length) {
+        _.each(els, function (el) {
+            me._cssToDom(el, obj)
+        })
+    } else {
+        me._cssToDom(els, obj)
+    }
+
+
+
+};
 /**
  * 添加smartObject css样式到dom
  */
-Css.smartCss = function (el, obj, ext) {
-    this.css(el, this.smartObject(obj, ext));
+Css.smartCss = function (els, obj, ext) {
+    var me = this;
+        me.css(els, me.smartObject(obj, ext));
+
+
+
 };
 export default  Css;

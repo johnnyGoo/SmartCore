@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>Smart</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <script src="../dist/smart.min.js"></script>
+<style>
+    .tile{
+        height: 300px;
+        width: 100%;
+        border-bottom: 1px solid #ff0000;
+    }
+
+</style>
+</head>
+<body>
+<div class="tile" id="s1">
+
+
+
+</div>
+<div class="tile" id="s2">
+
+
+
+</div>
+<div class="tile" id="s3">
+
+
+
+</div>
+<div class="tile" id="s4">
+
+
+
+</div>
+
+<script>
+    var Event = Smart.Event;
+    var Utils=Smart.Utils;
+    var  Way=Smart.Way;
+    var Rect=Smart.Physics.Rect;
+    var Point=Smart.Physics.Point;
+
+    var WindowSize=Utils.windowSize();
+
+    var way=new Way(function (state) {
+        console.log(state);
+
+    })
+
+    var rm_widow=Event.windowEvent('resize', function (e) {
+
+      //  console.log(Utils.domInfo(e.target));
+        way.updateSize();
+        WindowSize=Utils.windowSize();
+
+    })
+
+
+
+
+   Smart.ready(function () {
+       var scroll_widow=Event.bindEvent(window,'scroll', function (e) {
+        //   console.log('window scroll');
+           var data=Utils.domInfo(e.target);
+
+
+           way.updateView(data.scrollLeft,data.scrollTop,WindowSize.width,WindowSize.height);
+
+           //  scroll_widow();
+       })
+       way.update([{dom:'#s1'},{dom:'#s2'},{dom:'#s3'},{dom:'#s4'}])
+       console.log(Utils.domInfo('#s2'))
+
+
+   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

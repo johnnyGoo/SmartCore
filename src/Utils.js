@@ -68,6 +68,12 @@ Utils.getCss = function (src, callback) {
     head.insertBefore(script, head.firstChild);
 };
 Utils.domInfo = function (dom) {
+    if(!dom){
+        throw  new Error('dom is needed')
+    }
+    if(this.isString(dom)){
+        dom=document.querySelector(dom);
+    }
     if (dom == window || dom == document) {
         dom = document.body
     }

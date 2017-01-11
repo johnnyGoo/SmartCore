@@ -14,7 +14,7 @@
     abc
 </div>
 <div class="test vue-popup-shake-animation">blue</div>
-
+<div class="test vue-popup-shake-animation">blue2</div>
 
 <script>
 
@@ -32,7 +32,7 @@
        opacity: 1
    }, 'px');
    Css.css(document.querySelector('.black'),{color:'#fff'});
-   Css.smartCss(document.querySelector('.test'),{color:'#fff',background:'#00ff00',padding:10},'px')
+   Css.smartCss(document.querySelectorAll('.test'),{color:'#fff',background:'#00ff00',padding:10},'px')
 
 
 

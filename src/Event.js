@@ -1,6 +1,7 @@
 /**
  * Created by johnny on 16/7/11.
  */
+import Utils from './Utils'
 var Event = {};
 Event.bindEvent = function (dom,event, cb, useCapture) {
     function remove() {
@@ -11,10 +12,12 @@ Event.bindEvent = function (dom,event, cb, useCapture) {
             remove();
         }
     }
-
-    dom.addEventListener(event, icc, useCapture)
+    dom.addEventListener(event, icc, useCapture);
     return remove;
 };
+
+
+
 Event.documentEvent = function (event, cb, useCapture) {
    return this.bindEvent(document.documentElement,event,cb,useCapture);
 };
