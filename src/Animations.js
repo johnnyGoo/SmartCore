@@ -8,6 +8,9 @@ import _ from 'underscore'
 
 // Utility
 
+
+var count=1
+
 function findKeyframeRules(styles, func) {
     var rules = styles.cssRules || styles.rules || [];
 
@@ -187,12 +190,6 @@ Animations.prototype.getDynamicSheet = function () {
 
 Animations.prototype.create = function (name, frames) {
 
-
-    
-
-    
-
-
     var styles = this.getDynamicSheet();
 
     // frames can also be passed as the first parameter
@@ -205,8 +202,9 @@ Animations.prototype.create = function (name, frames) {
     })
 
     if (!name) {
-        this.id++;
-        name = 'johnny_css_animation_' + this.id;
+        count++;
+        name = 'johnny_css_animation_' + count;
+
     }
 
     // Append a empty animation to the end of the stylesheet

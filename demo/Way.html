@@ -44,21 +44,18 @@
     var  Way=Smart.Way;
     var Rect=Smart.Physics.Rect;
     var Point=Smart.Physics.Point;
-
     var WindowSize=Utils.windowSize();
-
     var way=new Way(function (state) {
         console.log(state);
 
-    })
+    });
 
     var rm_widow=Event.windowEvent('resize', function (e) {
-
       //  console.log(Utils.domInfo(e.target));
         way.updateSize();
         WindowSize=Utils.windowSize();
 
-    })
+    });
 
 
 

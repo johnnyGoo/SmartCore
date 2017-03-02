@@ -27,24 +27,26 @@
     var Event = Smart.Event;
     var Utils=Smart.Utils;
     Event.documentEvent('click', function () {
-        console.log('once clicked');
+//        console.log('once clicked');
         return true;
     });
     var rm_widow=Event.windowEvent('resize', function (e) {
-        console.log('window resize');
-
-        console.log(Utils.domInfo(e.target));
+//        console.log('window resize');
+//        console.log(Utils.domInfo(e.target));
         rm_widow();
     })
 //    var rm_scoll=Event.bindEvent(window,'scroll', function () {
 //        console.log('scoll');  console.log(Utils.windowSize());
 //       // rm_scoll();
 //    })
-
+    Event.keyEvent(null,13, function (e) {
+        console.log(e);
+        return false;
+    });
     var scroll_widow=Event.bindEvent(document.getElementById('scroll'),'scroll', function (e) {
-        console.log('window scroll');
+//        console.log('window scroll');
         var data=Utils.domInfo(e.target);
-        console.log(data.scrollTop,data.scrollLeft);
+//        console.log(data.scrollTop,data.scrollLeft);
       //  scroll_widow();
     })
 

@@ -3,6 +3,7 @@
  */
 import Utils from './Utils'
 import _ from 'underscore'
+import Physics from './Physics'
 var Css = {};
 
 Css.style = function () {
@@ -146,11 +147,31 @@ Css.createCssString = function (cssString) {
 };
 Css.smartObject = function (obj, ext) {
     obj = _.clone(obj);
+    if (obj.vector) {
+        var value = obj.vector;
+        var v = new Physics.Vector(0, 0);
+        if (value.point) {
+            v.point = new Physics.Point(value.point.x, value.point.y);
+        } else {
+            if (value.length) {
+                v.length = value.length
+            }
+            if (value.angle) {
+                v.angle = value.angle
+            }
+        }
+        obj.x = v.point.x.toFixed(0);
+        obj.y = v.point.y.toFixed(0)
+
+
+    }
     var transform = transformObject(obj, ext);
     Utils.clearKeys(obj, ['x', 'y', 'scale', 'scaleX', 'scaleY', 'rotate', 'rotateX', 'rotateY']);
     var cssObj = {};
     _.each(obj, function (value, key) {
         // cssObj[key] = withExt(key, value, ext);
+
+
         if (Utils.match(key, '^transition|^animation|^transform-|^perspective|^backface-visibility|^filter')) {
             _.extend(cssObj, fixCss(key, withExt(key, value, ext)))
         } else {
@@ -181,12 +202,12 @@ Css.createSmartCssStyle = function (mark, smartObj, ext) {
 
 Css._cssToDom = function (el, obj) {
     _.each(obj, function (v, k) {
-        if (v) {
-            el.style[k] = v;
-        } else {
-            el.style[k] = '';
-        }
-
+        el.style[k] = v;
+        // if (v) {
+        //     el.style[k] = v;
+        // } else {
+        //     el.style[k] = '';
+        // }
     });
 };
 Css.css = function (els, obj) {
@@ -200,15 +221,13 @@ Css.css = function (els, obj) {
     }
 
 
-
 };
 /**
  * 添加smartObject css样式到dom
  */
 Css.smartCss = function (els, obj, ext) {
     var me = this;
-        me.css(els, me.smartObject(obj, ext));
-
+    me.css(els, me.smartObject(obj, ext));
 
 
 };

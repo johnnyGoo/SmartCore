@@ -6,30 +6,85 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
+    <script src="vue.min.js"></script>
     <script src="../dist/smart.min.js"></script>
-
+    <style>
+        .point {
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+            background-color: #000;
+        }
+        body,html{
+            width: 100%;height: 100%;overflow: hidden;
+        }
+    </style>
 </head>
-<body>
-<div id="log"></div>
 
+<body id="app" @touchstart="_onTouchStart"
+      @mousedown="_onTouchStart" >
+<div id="log">angle:{{v.angle}} <br/>length:{{v.length}} <br/>point:{x:{{v.point.x.toFixed(0)}},y:{{v.point.y.toFixed(0)}}}</div>
+<div class="point" style="position: absolute;left: 200px;top:200px;">
+    <div class="point" :style="{left:v.point.x+'px',top:v.point.y+'px'}" style="position: absolute;"></div>
+</div>
 
 <script>
 
-    Physics=Smart.Physics;
-
-    var rec=new Physics.Rect(new Physics.Point(),10,10)
-
-    console.log(rec.contain(new Physics.Point(10,11)));
-
-    console.log(rec.containRect(new Physics.Rect(new Physics.Point(-1,-1),5,5)));
+    var Physics = Smart.Physics;
+    var Vector = Physics.Vector
+    var Point = Physics.Point;
 
 
+    var App = new Vue({
+        el: "#app",
+        data: {v:new Vector(100)},
+        methods:{
+            _getTouchPos(e) {
+                var tp = e.changedTouches ? e.changedTouches[0] : e;
+                return {pageX: tp.pageX, pageY: tp.pageY};
+            },
+            _onTouchStart(e) {
+                document.addEventListener('touchmove', this._onTouchMove, false);
+                document.addEventListener('touchend', this._onTouchEnd, false);
+                document.addEventListener('mousemove', this._onTouchMove, false);
+                document.addEventListener('mouseup', this._onTouchEnd, false);
+
+                // this.$emit('start', this.value);
+            },
+            _onTouchMove(e) {
+                var npos = this._getTouchPos(e);
+//                this.v.point=new Point(npos.pageX-200,npos.pageY-200);
+                this.v.angle=npos.pageX.toFixed(0);
+                //  this.$emit('update', this.value);
+            },
+            _onTouchEnd(e) {
+                document.removeEventListener('touchmove', this._onTouchMove);
+                document.removeEventListener('touchend', this._onTouchEnd);
+                document.removeEventListener('mousemove', this._onTouchMove);
+                document.removeEventListener('mouseup', this._onTouchEnd);
+
+            }
+        }
+        ,ready:function () {
+            this.v.angle=90
+        }
+    })
+
+//    console.log(Math.PI)
+//    var v = new Vector(45, 10);
+//    console.log(v.point, v.length);
+//    v.angle = 90;
+//    console.log(v.angle, v.point);
+//    v.point = new Point(0, 10);
+//    console.log(v.point, v.angle);
 
 
-
-
-
-
+    //    var rec=new Physics.Rect(new Physics.Point(),10,10)
+    //
+    //    console.log(rec.contain(new Physics.Point(10,11)));
+    //
+    //    console.log(rec.containRect(new Physics.Rect(new Physics.Point(-1,-1),5,5)));
+    //
 
 
 </script>

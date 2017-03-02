@@ -5,21 +5,21 @@ import Utils from './Utils'
  */
 
 
-var Url={};
+var Url = {};
 
 
 /*
  * 获取浏览器?后所有参数的对象，没有返回{}
  * */
 Url.getParams = function (url) {
-    url=url||String(window.location);
+    url = url || String(window.location);
     return Utils.stringToObject(url.split("?")[1]);
 };
 /*
  * 获取#后所有参数的字符串，没有返回''
  * */
 Url.getHashsString = function (url) {
-    url=url||String(window.location);
+    url = url || String(window.location);
     return url.split("#")[1];
 
 };
@@ -34,8 +34,13 @@ Url.getHashs = function (url) {
  * 设置#后所有参数
  * */
 Url.setHashs = function (vars) {
-    window.location = String(window.location).split("#")[0] + '#' + Core.objectToString(vars);
+    var str = vars;
+    if (Utils.isObject(vars)) {
+        str = '#' +Core.objectToString(vars);
+    }
+   // window.location = String(window.location).split("#")[0] + str;
 
+    history.replaceState ? history.replaceState(null, null, window.location.href.split('#')[0]+str) : window.location.hash = str;
 };
 Url.cachedHashs = '';
 
@@ -79,21 +84,21 @@ Url.getUrl = function (url) {
     window.location = url;
 };
 
-Url.reload=function(){
+Url.reload = function () {
     location.reload();
 };
 
 //获取HTML目录
 Url.getPath = function (path) {
-    var p = path||window.location.href;
+    var p = path || window.location.href;
     var pos = p.lastIndexOf("/index.php");
-    if(pos>0){
+    if (pos > 0) {
 
 
-    p= p.substr(0, pos + 1);
+        p = p.substr(0, pos + 1);
 
     }
-    pos= p.lastIndexOf("/");
+    pos = p.lastIndexOf("/");
     return p.substr(0, pos + 1);
 
 };
@@ -114,8 +119,6 @@ Url.getFileName = function (url) {
         ext: ext
     };
 };
-
-
 
 
 export default Url;

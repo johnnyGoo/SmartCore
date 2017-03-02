@@ -193,6 +193,8 @@ Utils.stringToObject = function (str) {
         if (arrSource[i].indexOf("=") > 0) {
             node = arrSource[i].split("=");
             obj[node[0]] = node[1];
+        }else{
+            obj[arrSource[i]]=undefined;
         }
         i++;
     }
