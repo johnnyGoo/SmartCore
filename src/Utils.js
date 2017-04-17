@@ -13,7 +13,17 @@ Utils.removeDom = function (dom) {
         dom.parentNode.removeChild(dom)
     }
 };
-
+Utils.imageNaturalSize = function (img) {
+    if (typeof img.naturalWidth == "undefined") {
+        // IE 6/7/8
+        var i = new Image();
+        i.src = img.src;
+        return {width:i.width,height:i.height};
+    }else {
+        // HTML5 browsers
+        return {width:img.naturalWidth,height:img.naturalHeight};
+    }
+}
 
 /*
  * 获取js
