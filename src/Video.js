@@ -79,6 +79,7 @@ Video.prototype = {
     },
 
     play: function () {
+
         this.ended = false;
         this.endedCheck();
         this.video.play();

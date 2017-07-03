@@ -15,4 +15,25 @@ import Cookie from './Cookie'
 import Size from './Size'
 import Physics from './Physics'
 import Way from './Way'
-export {_,Animations,Css,Event,Utils,EventDispatcher,Loader,Device,Sound,Tween,Url,Video,ready,Cookie,Size,Physics,Way}
+import Quaternion from './Quaternion'
+
+export {
+    _,
+    Animations,
+    Css,
+    Event,
+    Utils,
+    EventDispatcher,
+    Loader,
+    Device,
+    Sound,
+    Tween,
+    Url,
+    Video,
+    ready,
+    Cookie,
+    Size,
+    Physics,
+    Way,
+    Quaternion
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>腾讯视频</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <script src="../dist/smart.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+<div id="example" class="black"
+     style="color:#ff0000;width:100%;height: 1500px;background: #0086b3;padding: 10px;color: #fff;text-align: center">
+    abc
+</div>
+
+
+<script>
+
+
+    var diplayEulerDiff = function (deg) {
+
+        iH = "orientation euler diff after quaternions<br>"
+        iH += "x = " + deg.x.toFixed(2) + "<br>"
+        iH += "y = " + deg.y.toFixed(2)  + "<br>"
+        iH += "z = " + deg.z.toFixed(2)  + "<br>"
+        document.getElementById("example").innerHTML = iH;
+        if (Math.abs(deg.x) > 20 || Math.abs(deg.y) > 20 || Math.abs(deg.z) > 20) {
+            document.getElementById("example").style.background = "red";
+        } else {
+            document.getElementById("example").style.background = "black";
+        }
+
+
+    }
+
+
+    var initqa;
+
+    if (window.DeviceOrientationEvent) {
+        function orientationHandler(e) {
+            var qa = new Smart.Quaternion()
+            qa.alphaBetaGamma(e.alpha, e.beta, e.gamma);
+            if (!initqa) {
+                initqa = qa;
+            }
+
+
+            var def = initqa.difference(qa);
+            var deg=def.rad2deg();
+            diplayEulerDiff(deg)
+
+             console.log(deg)
+        }
+
+        window.addEventListener("deviceorientation", orientationHandler, false);
+    }
+
+
+</script>
+</body>
+</html>

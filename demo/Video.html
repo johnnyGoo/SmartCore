@@ -7,6 +7,7 @@
     <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
     <script src="../dist/smart.min.js"></script>
+    <script src="../dist/wechat_autoplay.js"></script>
 
 </head>
 <body>
@@ -14,13 +15,13 @@
 <div id="seek" style="float: left;margin-left: 10px">Seek</div>
 <div id="log" style="float: left;margin-left: 10px">log</div>
 <div id="TXVideo" style="width: 100%; height:100%;"></div>
-<video id="video" webkit-playsinline="true" autoplay="auto" src="./sound/m36.mp4" width="300" height="300"></video>
+<video id="video" webkit-playsinline="true"  width="300" height="300"></video>
 <script>
 
     console.log(Smart)
 
     var video = new Smart.Video({
-        src: './sound/m36.mp4',width:"300",height:"300",video:document.getElementById('video'),autoplay:'auto'
+        src: './sound/v.mp4',width:"300",height:"300",video:document.getElementById('video'),autoplay:false
     });
 
 
@@ -43,7 +44,11 @@
         log(e.type)
     })
 
-    video.play();
+    //video.play();
+
+    setTimeout( function () {
+        video.play()
+    },2000);
 
 
     //video.pause();
@@ -52,7 +57,7 @@
     // video.destory();
     // video.toggle();
 
-    video.seek(284);
+   // video.seek(284);
 
 
 </script>

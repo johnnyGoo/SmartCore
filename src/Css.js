@@ -201,8 +201,12 @@ Css.createSmartCssStyle = function (mark, smartObj, ext) {
  */
 
 Css._cssToDom = function (el, obj) {
+    if(!el){
+        return
+    }
     _.each(obj, function (v, k) {
-        el.style[k] = v;
+        if(el.style){
+        el.style[k] = v;}
         // if (v) {
         //     el.style[k] = v;
         // } else {

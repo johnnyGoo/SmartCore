@@ -51,9 +51,17 @@
     })
 
 
+   var fun1= Event.bindWindowSize(function (size) {
+        console.log(1,size)
+    },500)
 
 
+    setTimeout(Event.unbindWindowSize,1000,fun1);
 
+
+    Event.bindWindowSize(function (size) {
+        console.log(2,size)
+    },500)
 
 
 </script>
